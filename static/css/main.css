@@ -140,7 +140,7 @@ button:hover {
     border-left: 0.5em solid #2e4246;
     transition: all ease-in-out 0.8s;
     transform: translateX(450px);
-    box-shadow: -2em 2em 30px #374a4e44;
+    box-shadow: -2em 2em 25px #374a4e44;
 }
 
 .additional {
