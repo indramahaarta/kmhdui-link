@@ -149,6 +149,11 @@
             border-left: 0.5em solid #b41515 !important;
         }
 
+        .button-style2 {
+            background: #4bb543 !important;
+            border-left: 0.5em solid #358b2e !important;
+        }
+
         button:hover {
             cursor: pointer;
             background-color: #7EB5A6 !important;
@@ -242,11 +247,11 @@
             }
 
             function successToGenerateURL(text){
-                alert.classList.add("additional");
+                alert.classList.add("additional", "button-style2");
                 alert.innerText = text;
 
                 setTimeout(() =>{
-                    alert.classList.remove("additional");
+                    alert.classList.remove("additional", "button-style2");
                     btn.innerText = "Generate URL";
                 }, 4500)
             }
