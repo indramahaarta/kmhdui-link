@@ -9,7 +9,7 @@
     <title>KMHDUI Link</title>
 
     <!-- LOGO -->
-    <link rel = "icon" type = "image/jpg" href = "../../static/images/kmhdui-1.jpg">
+    <link rel = "icon" type = "image/jpg" href = "https://i.ibb.co/5hRVzTd/kmhdui-1.jpg">
 
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
@@ -23,6 +23,253 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #7EB5A6;
+            height: 100vh;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #alert {
+            box-sizing: unset;
+            position: fixed;
+            background-color: #4bb543;
+            bottom: 20px;
+            right: 20px;
+            padding: 20px;
+            border-radius: 1.2em;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            font-size: 10px;
+        }
+
+        #alert div {
+            font-size: large;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 0.6em;
+            max-width: 500px;
+            height: fit-content;
+            padding: 30px 20px;
+            box-shadow: 0.5em 2em 30px #3a535844;
+            
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .title {
+            display: flex;
+            flex-direction: column;
+            font-size: 30px;
+            font-weight: bolder;
+            position: relative;
+        }
+
+        .title::after {
+            content: "";
+            left: 0;
+            bottom: 0;
+            position: absolute;
+            height: 3px;
+            width: 40px;
+            border-radius: 0.6em;
+            background-color: #557B83;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        label {
+            padding-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        input, button{
+            width: 100%;
+            border-radius: 0.6em;
+        }
+
+        input {
+            font-size: 20px;
+            padding: 15px;
+            outline: none;
+            border: 1px solid #71b7e6;
+        }
+
+        input:focus {
+            border-color: #9b59b6;
+            outline:#9b59b6
+        }
+
+        button#btn {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
+            margin-top: 20px;
+            color: white;
+            border: unset !important;
+            transition: all ease-in-out 0.5s;
+            background-color: #3f585d;
+        }
+
+        .button-style3 {
+            background: #f51a1a !important;
+            border-left: 0.5em solid #b41515 !important;
+        }
+
+        button:hover {
+            cursor: pointer;
+            background-color: #7EB5A6 !important;
+        }
+
+        #alert {
+            font-size: 1.1em;
+            font-weight: 400px;
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            background-color: #406168;
+            padding: 10px 18px;
+            border-radius: 0.5em;
+            border-left: 0.5em solid #2e4246;
+            transition: all ease-in-out 0.8s;
+            transform: translateX(450px);
+            box-shadow: -2em 2em 25px #374a4e44;
+        }
+
+        .additional {
+            transform: translateX(0px) !important;
+        }
+
+        @media (max-width: 400px) {
+            img {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .title {
+                display: flex;
+                flex-direction: column;
+                font-size: 24px;
+                font-weight: bolder;
+            }
+                
+            input, button, label {
+                font-size: 13px;
+            }
+
+            #alert {
+                left: 10px !important;
+            }
+        }
+
+        @media (max-width: 430px) {
+            #alert {
+                left: 10px !important;
+            }
+        }
+    </style>
+
+    <script>
+        window.onload = function() {
+            var btn = document.getElementById("btn");
+            var alert = document.getElementById("alert");
+
+            if (btn != null) {
+
+                btn.addEventListener('click', function(e){
+                    e.preventDefault();
+
+                    var copyText = document.getElementById("short_link").value;
+                    navigator.clipboard.writeText("https://kmhdui.herokuapp.com/" + copyText);
+
+                    var lu = document.getElementById("long_link").value;
+                    var su = document.getElementById("short_link").value;
+
+                    $.ajax({
+                        type:'POST',
+                        url:'create/',
+                        data: {
+                            long_url : lu,
+                            short_url : su,
+                            csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken').val()
+                        },
+                        success: function(){
+                            if (lu != "" && su != "" && lu.length >=8 && lu.slice(0,8) == "https://") { 
+                                successToGenerateURL("Your URL has been copied to the clipboard");
+                            } else if (lu != "" && su != "" && lu.length ==7 && lu.slice(0,7) == "http://"){
+                                successToGenerateURL("Your URL has been copied to the clipboard");
+                            } else if (lu != "" && su != "") {
+                                urlIsNotValid("URL is not valid!!");
+                            } else {
+                                fieldNotCompleate("The form cannot be empty!!");
+                            }
+                        }
+                    });
+                });
+            }
+
+            function successToGenerateURL(text){
+                alert.classList.add("additional");
+                alert.innerText = text;
+
+                setTimeout(() =>{
+                    alert.classList.remove("additional");
+                    btn.innerText = "Generate URL";
+                }, 4500)
+            }
+
+            function fieldNotCompleate(text){       
+                alert.classList.add("additional", "button-style3");
+                alert.innerText = text;
+
+                setTimeout(() =>{
+                    alert.classList.remove("additional", "button-style3");
+                }, 4500)
+            }
+
+            function urlIsNotValid(text){
+                alert.classList.add("additional", "button-style3");
+                alert.innerText = text;
+
+                setTimeout(() =>{
+                    alert.classList.remove("additional", "button-style3");
+                }, 4500)
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -31,7 +278,7 @@
                 KMHDUI.Link
             </div>
             <div class="img">
-                <img src="../../static/images/kmhdui-removebg-preview.1.png" alt="">
+                <img src="https://i.ibb.co/4P7jZPf/kmhdui-removebg-preview-1.png" alt="">
             </div>
         </div>
         <form action="" method="POST">
