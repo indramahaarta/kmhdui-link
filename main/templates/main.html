@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMHDUI Link</title>
+
+    <!-- LOGO -->
+    <link rel = "icon" type = "image/png" href = "../static/images/kmhdui-1.jpg">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;800&display=swap" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">
+                KMHDUI.Link
+            </div>
+            <div class="img">
+                <img src="../static/images/kmhdui-removebg-preview.1.png" alt="">
+            </div>
+        </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="wrapper">
+                <label for="long_link">Url</label>
+                <input type="text" name="long_link" id="long_link" required>
+            </div>
+            <div class="wrapper">
+                <label for="short_url">kmhdui.herokuapp.com/</label>
+                <input type="text" name="short_link" id="short_link" required>
+            </div>
+            <div class="wrapper">
+                <button type="submit" id="btn" class="button-style1">Generate URL</button>
+            </div>
+        </form>
+    </div>
+    <div class="" id="alert">
+    </div>
+</body>
+</html>
